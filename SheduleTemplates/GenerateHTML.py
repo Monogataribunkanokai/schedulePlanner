@@ -22,9 +22,10 @@ class GenerateSheduleHTML():
     def shedule(self):
         return self.__shedule
     def __GetCaption(self):
+        name=self.shedule.name
         caption=self.shedule.caption
-        t=Template('<caption>$caption</caption>')
-        return t.substitute(caption=caption)
+        t=Template('<caption>$name<br>$caption</caption>')
+        return t.substitute(caption=caption,name=name)
     def __GetTable(self):
         caption=self.__GetCaption()
         t=Template('<table class="class">$caption</table>')
@@ -33,13 +34,13 @@ class GenerateSheduleHTML():
         table=self.__GetTable()
         headder=self.__headder
         result=Template('$headder$table').substitute(headder=headder,table=table)
-        with open(self.__file_path,mode='w')as file:
+        with open(self.__file_path,mode='w', encoding="utf-8")as file:
             file.write(result)
 
 if __name__ == '__main__':
     start_day=date(2024,8,12)
-    caption='aaaaaaaaaaaa'
-    name='bbbbbbbb'
+    caption='春キャンプ'
+    name='2024春キャン'
     css_path='SheduleTemplate.css'
     file_path='SheduleTemplate.html'
     she=Shedule(start_day=start_day,name=name,caption=caption)
