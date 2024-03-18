@@ -8,10 +8,10 @@ headder=Template('<head><link rel="stylesheet" type="text/css" href="$cssPath"/>
 
 class GenerateSheduleHTML():
     def __init__(self,shedule:Shedule,file_path:str='test.html',css_path:str='Template.css') -> None:
-        self.__headder=Template('<head><link rel="stylesheet" type="text/css" href="$css_path"/></head>')
-        self.__file_path=file_path
+        self.__headder=Template('<head><link rel="stylesheet" type="text/css" href="$css_path"/></head>').substitute(css_path=css_path)
         self.__css_path=css_path
         self.__shedule=shedule
+        self.__file_path=file_path
     @property
     def file_path(self):
         return self.__file_path
