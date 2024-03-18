@@ -1,0 +1,7 @@
+.class {
+  border-collapse: collapse;
+}
+.class th, .class td {
+  border: 2px solid #333;
+  padding: 10px;
+}
