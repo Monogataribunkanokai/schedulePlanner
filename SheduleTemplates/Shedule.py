@@ -25,7 +25,7 @@ class Shedule():
         return self.__name
     @property
     def caption(self):
-        return self.caption
+        return self.__caption
     def add_day(self,day):
         self.__days.append(day)
     def get_days(self):
