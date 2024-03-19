@@ -4,13 +4,43 @@ from datetime import time,date
 cssPath='SheduleTemplate.css'
 headder=Template('<head><link rel="stylesheet" type="text/css" href="$cssPath"/></head>')
 #print(headder.substitute(cssPath=cssPath))
-
+class CaptionColum():
+    def __init__(self,name:str='',caption:str='',type='') -> None:
+        self.__name=name
+        self.__caption=caption
+    @property
+    def name(self):
+        return self.__name
+    @property
+    def caption(self):
+        return self.__caption
 class DayEvent():
-    def __init__(self) -> None:
+    """1日単位のイベントの集合
+    """
+    def __init__(self,caption_column_list:list[CaptionColum]) -> None:
         self.__events:list[Event]=[]
         self.__day_count:int=1
+    @property
+    def events(self):
+        return self.__events
+    @property
+    def day_count(self):
+        return len(self.__events)
+    def add_new_event(self):
+        new_event=Event()
+        self.__events.append(new_event)
+        return new_event
 class Shedule():
+    """生成するためのスケジュール本体
+    """
     def __init__(self,start_day:date,name:str='',caption:str='') -> None:
+        """スケジュールインスタンス
+
+        Args:
+            start_day (date): 予定開始日
+            name (str, optional): スケジュールの名前. Defaults to ''.
+            caption (str, optional): スケジュールの説明. Defaults to ''.
+        """
         self.__days:list[DayEvent]=[]
         self.__start_day=start_day
         self.__name:str=name
@@ -18,6 +48,11 @@ class Shedule():
         self.__caption_column:list[CaptionColum]
     @property
     def days(self):
+        """DayEventリスト
+
+        Returns:
+            _type_: DayEventリスト
+        """
         return self.__days
     @property
     def start_day(self):
@@ -32,7 +67,12 @@ class Shedule():
     def caption_column(self):
         return self.__caption_column
     def add_new_day_event(self):
-        dayevent=DayEvent()
+        """新規DayEventを追加する
+
+        Returns:
+            _type_: 追加したDayEvent
+        """
+        dayevent=DayEvent(self.__caption_column)
         self.__days.append(dayevent)
         return dayevent
     def add_new_caption_column(self,name:str='',caption=''):
@@ -41,23 +81,15 @@ class Shedule():
         return capotion_column
     def get_days(self):
         return len(self.__days)
-class CaptionColum():
-    def __init__(self,name:str='',caption:str='') -> None:
-        self.__name=name
-        self.__caption=caption
-    @property
-    def name(self):
-        return self.__name
-    @property
-    def caption(self):
-        return self.__caption
+
 class Event():
     def __init__(self) -> None:
         self.__start_time:time
         self.__end_time:time
         self.__exe_time:time
-        self.__caption:str
-        self.__Place:list[dict[Place,Group]]=[]
+        self.__caption:list[str]=[]
+        self.__move_time:time
+        self.name:str
 class Place():
     def __init__(self,Name:str,Caption:str) -> None:
         self.__name=Name
